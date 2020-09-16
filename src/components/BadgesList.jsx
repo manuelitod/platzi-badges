@@ -26,6 +26,13 @@ class BadgesListItem extends React.Component {
 
 class BadgesList extends React.Component {
   render() {
+    if (this.props.badges.length === 0) {
+      return (
+        <>
+          <h3>No badges were found. Please Create a new one</h3>
+        </>
+      );
+    }
     return (
       <ul className="list-unstyled">
         {this.props.badges.map((badge) => {
