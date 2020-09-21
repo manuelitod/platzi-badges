@@ -440,6 +440,23 @@
       "jobTitle": "Lawyer",
       "twitter": "ckaufmanpr",
       "id": "npaYZKI"
+    },
+    {
+      "firstName": "Manuel",
+      "lastName": "Rodrigues",
+      "email": "mr.1311223@gmail.com",
+      "twitter": "manuelitod",
+      "jobTitle": "Designer",
+      "id": "d9ewQ6p"
+    },
+    {
+      "firstName": "Richard",
+      "lastName": "Test",
+      "email": "richardbkaufman@gmail.com",
+      "twitter": "richard",
+      "jobTitle": "Product Manager",
+      "avatarUrl": "https://www.gravatar.com/avatar/21594ed15d68ace3965642162f8d2e84?d=identicon",
+      "id": "mMx_Xh0"
     }
   ]
 }

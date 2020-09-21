@@ -1,19 +1,21 @@
 import React from "react";
-import header from "../images/badge-header.svg";
+import header from "../images/platziconf-logo.svg";
 import Badge from "../components/Badge";
 import BadgeForm from "../components/BadgeForm";
 import "./styles/BadgeNew.css";
 
 class BadgeNew extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      loading: false,
       badgeFormValues: {
         firstName: "",
         lastName: "",
         email: "",
         twitterUsername: "",
         jobTitle: "",
+        error: null,
       },
     };
   }
@@ -31,7 +33,11 @@ class BadgeNew extends React.PureComponent {
     return (
       <>
         <div className="BadgeNew__hero">
-          <img className="img-fluid" src={header} alt="Logo" />
+          <img
+            className="BadgeNew__hero-image img-fluid"
+            src={header}
+            alt="Logo"
+          />
         </div>
 
         <div className="container">
@@ -42,7 +48,7 @@ class BadgeNew extends React.PureComponent {
                 lastName={this.state.badgeFormValues.lastName}
                 twitterUsername={this.state.badgeFormValues.twitterUsername}
                 jobTitle={this.state.badgeFormValues.jobTitle}
-                userAvatarUrl="https://avatars3.githubusercontent.com/u/22405900?s=460&u=575d009b58ef917b1d9f6fb43a635e3edaab82c2&v=4"
+                email={this.state.badgeFormValues.email || "EMAIL"}
               />
             </div>
             <div className="col-6">
