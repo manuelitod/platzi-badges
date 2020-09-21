@@ -1,5 +1,6 @@
 import React from "react";
 import BadgesList from "../components/BadgesList";
+import PageLoading from "../components/PageLoading";
 import { Link } from "react-router-dom";
 import confLogo from "../images/badge-header.svg";
 import api from "../api";
@@ -32,7 +33,7 @@ class Badges extends React.Component {
   render() {
     let badgeList;
     if (this.state.loading) {
-      badgeList = <div className="BadgesListItem">Loading...</div>;
+      return <PageLoading />;
     } else {
       badgeList = <BadgesList badges={this.state.data} />;
     }
