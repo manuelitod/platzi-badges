@@ -43,18 +43,32 @@ const BadgeForm = (props) => {
   let history = useHistory();
   const [loadingStatus, setLoadingStatus] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [initialValues, setInitialValues] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    jobTitle: "",
+    twitter: "",
+  });
+
+  useEffect(() => {
+    let initialValuesAux = Object.assign({}, initialValues);
+    if (props.badgeFormValues) {
+      Object.keys(initialValues).forEach((key) => {
+        initialValuesAux[key] = props.badgeFormValues[key];
+      });
+      setInitialValues(initialValuesAux);
+      setEditMode(true);
+    }
+  }, [props.badgeFormValues]);
 
   return (
     <>
-      <h1>New Attendant</h1>
+      <h1>{editMode ? "Edit Attendant" : "New Attendant"}</h1>
       <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          email: "",
-          twitter: "",
-          jobTitle: "",
-        }}
+        initialValues={initialValues}
+        enableReinitialize
         validationSchema={Yup.object({
           firstName: Yup.string()
             .max(15, "Must be 15 characters or less")
@@ -72,7 +86,7 @@ const BadgeForm = (props) => {
                 "Designer",
                 "Developer",
                 "Product Manager",
-                "other",
+                "Other",
                 "Software Engineer",
               ],
               "Invalid Job Type"
@@ -86,7 +100,11 @@ const BadgeForm = (props) => {
             const emailMd5 = md5(values.email);
             const avatarUrl = `https://www.gravatar.com/avatar/${emailMd5}?d=identicon`;
             values.avatarUrl = avatarUrl;
-            await api.badges.create(values);
+            if (editMode) {
+              await api.badges.update(props.badgeFormValues.id, values);
+            } else {
+              await api.badges.create(values);
+            }
             setLoadingStatus(false);
             setSubmitting(false);
             history.push("/badges");
@@ -159,7 +177,7 @@ const BadgeForm = (props) => {
                 <br />
 
                 <button className="btn btn-primary" type="submit">
-                  Save
+                  {editMode ? "Edit" : "Save"}
                 </button>
 
                 {submitError && (
