@@ -27,6 +27,19 @@ class BadgeDetailsContainer extends React.PureComponent {
     }
   };
 
+  deleteBadge = async () => {
+    let badgeId = this.props.match.params.badgeId;
+    this.setState({ loading: true, error: null });
+
+    try {
+      await api.badges.remove(badgeId);
+      this.setState({ loading: false });
+      this.props.history.push("/badges");
+    } catch (error) {
+      this.setState({ loading: false, error: error });
+    }
+  };
+
   componentDidMount() {
     this.fetchBadge();
   }
@@ -36,7 +49,9 @@ class BadgeDetailsContainer extends React.PureComponent {
 
     if (this.state.error) return <PageError error={this.state.error} />;
 
-    return <BadgeDetails badge={this.state.badge} />;
+    return (
+      <BadgeDetails badge={this.state.badge} onDeleteBadge={this.deleteBadge} />
+    );
   }
 }
 
